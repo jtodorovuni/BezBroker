@@ -13,6 +13,9 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class RegisterActivity extends AppCompatActivity {
 
     EditText fNameET;
@@ -22,6 +25,8 @@ public class RegisterActivity extends AppCompatActivity {
     EditText repeatPasswordET;
     EditText phoneET;
     CheckBox sellerCB;
+
+    SessionManager session;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +41,7 @@ public class RegisterActivity extends AppCompatActivity {
         repeatPasswordET = findViewById(R.id.registerRepeatPasswordET);
         phoneET = findViewById(R.id.registerPhoneET);
         sellerCB = findViewById(R.id.registerCB);
+        session = new SessionManager(this);
     }
 
     public void onCancelClick(View view){
@@ -59,7 +65,41 @@ public class RegisterActivity extends AppCompatActivity {
         String phone = phoneET.getText().toString();
         boolean isSeller = sellerCB.isChecked();
 
-        // send data to the server and see the response
+        JSONObject body = new JSONObject();
+
+        try {
+            body.put("email", email);
+            body.put("password", password);
+            body.put("firstName", firstName);
+            body.put("lastName", lastName);
+            body.put("phone", phone);
+            body.put("isSeller", isSeller);
+        } catch (JSONException e) {
+            throw new RuntimeException(e);
+        }
+
+        ApiClient.post("/api/register", body, null, new ApiClient.Callback() {
+            @Override
+            public void onSuccess(JSONObject body) {
+                String token = body.optString("token");
+                JSONObject user = body.optJSONObject("user");
+
+                if(token == null || user == null){
+                    Toast.makeText(RegisterActivity.this, "Something went kapalda", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                session.save(token, user.toString());
+
+                finish();
+            }
+
+            @Override
+            public void onError(int httpCode, String message) {
+                Toast.makeText(RegisterActivity.this, message, Toast.LENGTH_SHORT).show();
+            }
+        });
+
 
     }
 }
