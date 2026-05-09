@@ -4,4 +4,13 @@
     <string name="email_field">Email</string>
     <string name="password_field">Password</string>
     <string name="login_button">Login</string>
+    <string name="first_name">First Name</string>
+    <string name="surname">Surname</string>
+    <string name="repeat_password_field">Repeat password</string>
+    <string name="phone">Phone</string>
+    <string name="seller">Seller</string>
+    <string name="register">Register</string>
+    <string name="cancel">Cancel</string>
+    <string name="error_message_empty_fields">Please insert username and password</string>
+    <string name="error_password_missmatch">Please enter the same password twice</string>
 </resources>

@@ -8,7 +8,7 @@
     tools:context=".LoginActivity">
 
     <TextView
-        android:id="@+id/registerET"
+        android:id="@+id/registerTV"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="100dp"
@@ -67,9 +67,10 @@
         android:layout_marginStart="100dp"
         android:layout_marginTop="30dp"
         android:layout_marginEnd="100dp"
+        android:onClick="onLoginClick"
         android:text="@string/login_button"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/registerET" />
+        app:layout_constraintTop_toBottomOf="@+id/registerTV" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
