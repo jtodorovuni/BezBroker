@@ -14,13 +14,14 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Map;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 
 public class ApiClient {
 
-    public static final String BASE_URL = "https://bezbroker-api.onrender.com";
+    public static final String BASE_URL = "https://howtoremovevirus.info";
 
     public interface Callback{
         void onSuccess(JSONObject body);
@@ -36,6 +37,36 @@ public class ApiClient {
 
     public static void get(String path, String token, Callback cb){
         request("GET", path, null, token, cb);
+    }
+
+    public static void get(String path, Map<String, String> query, String token, Callback cb){
+        request("GET", path + buildQuery(query), null, token, cb);
+    }
+
+    private static String buildQuery(Map<String, String> query) {
+
+        if(query == null || query.isEmpty())
+            return "";
+
+        StringBuilder sb = new StringBuilder();
+        boolean first = true;
+
+        for(Map.Entry<String, String> e : query.entrySet()){
+            if(e.getValue() == null)
+                continue;
+
+            if(!first)
+                sb.append("&");
+
+            sb.append(e.getKey());
+            sb.append("=");
+            sb.append(e.getValue());
+            //sb.append(e.getKey()).append("=").append(e.getValue());
+
+            first = false;
+        }
+
+        return sb.toString();
     }
 
     private static void request(String method, String path, JSONObject body, String token, Callback cb) {
@@ -77,7 +108,7 @@ public class ApiClient {
                         }
 
                         String text = readAll(stream);
-                        //TODO: Fix here if it blows up
+
                         JSONObject json = new JSONObject(text);
 
                         if(code >= 200 && code <= 300){
