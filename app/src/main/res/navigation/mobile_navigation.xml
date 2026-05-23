@@ -12,10 +12,10 @@
         tools:layout="@layout/fragment_estates" />
 
     <fragment
-        android:id="@+id/nav_gallery"
-        android:name="com.example.bezbroker.ui.gallery.GalleryFragment"
-        android:label="@string/menu_gallery"
-        tools:layout="@layout/fragment_gallery" />
+        android:id="@+id/nav_map"
+        android:name="com.example.bezbroker.ui.MapFragment"
+        android:label="@string/menu_map"
+        tools:layout="@layout/fragment_map" />
 
     <fragment
         android:id="@+id/nav_slideshow"
